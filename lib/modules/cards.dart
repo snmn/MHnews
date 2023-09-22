@@ -2,6 +2,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:newsproject/static.dart';
 
 class CardModules {
   static Widget Cards(var size,String title, date, imageurl) {
@@ -53,6 +54,40 @@ class CardModules {
 
         ],
       ),
+    );
+  }
+
+  static Widget CardTitle (var size,String txt){
+    return  Container(
+        width: size.width/2,
+        margin: const EdgeInsets.only(left: 15),
+        child: Text(txt,
+          style: StaticValues.headernews,
+          overflow: TextOverflow.visible,maxLines: 2,));
+  }
+
+  static Widget VideoCard(String imgurl){
+    return Stack(
+      children: [
+        Container(
+          height: 120,
+          width: 150,
+          margin: const EdgeInsets.only(left: 15,right: 0),
+          decoration: BoxDecoration(color: Colors.grey,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.network(imgurl
+                ,fit: BoxFit.cover),
+          ),
+
+        ),
+        const Positioned(
+            top: 40,
+            left: 70,
+            child: Icon(Icons.play_circle_fill,color: Colors.white,size: 40,))
+      ],
     );
   }
 }
