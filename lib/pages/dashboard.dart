@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newsproject/api/getapi.dart';
 import 'package:newsproject/pages/detailpage.dart';
 import 'package:newsproject/static.dart';
 
@@ -16,6 +17,13 @@ class DashboardState extends State<Dashboard>{
  navigatetodetail(BuildContext context,String imgurl){
    return Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailPage(imgurl)));
  }
+
+@override
+  void initState() {
+   GetApi().getnewsdata();
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
