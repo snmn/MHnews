@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:newsproject/modules/cards.dart';
 
+import '../model/newsdata.dart';
+import '../static.dart';
+
 class DetailPage extends StatefulWidget{
-  String imgurl;
-  DetailPage(this.imgurl, {super.key});
+  Articles articles;
+  DetailPage(this.articles, {super.key});
 
   @override
   State<StatefulWidget> createState() {
-    return DetailPageState(imgurl);
+    return DetailPageState(articles);
   }
 
 }
 
 class DetailPageState extends State<DetailPage>{
-  String imgurl;
-  DetailPageState(this.imgurl);
+  Articles articles;
+  DetailPageState(this.articles);
 
-  navigatetodetail(BuildContext context,String imgurl){
-    return Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailPage(imgurl)));
+  navigatetodetail(BuildContext context,Articles articles){
+    return Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailPage(articles)));
   }
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,7 @@ class DetailPageState extends State<DetailPage>{
                Container(
                  height: size.height/4,
                  width: size.width,
-                 child: Image.network(imgurl,fit: BoxFit.cover,)
+                 child: Image.network(articles.urlToImage==null?StaticValues.defaultimg:articles.urlToImage!,fit: BoxFit.cover,)
                ),
                GestureDetector(
                  onTap: (){
@@ -56,7 +59,7 @@ class DetailPageState extends State<DetailPage>{
            const SizedBox(height: 15,),
            Padding(
              padding: const EdgeInsets.only(left:15.0),
-             child: Text("Silver Linings To Covid in march 2020".toUpperCase(),
+             child: Text(articles.title!.toUpperCase(),
                style: TextStyle(color: Colors.black,
                    fontSize: 20,fontWeight: FontWeight.bold),),
            ),
@@ -65,17 +68,17 @@ class DetailPageState extends State<DetailPage>{
              children: [
                Padding(
                  padding: const EdgeInsets.only(left: 15.0),
-                 child: const Text("Season Maharjan",style: TextStyle(color: Colors.grey),),
+                 child:  Text(articles.author==null?"No Author":articles.author!,style: const TextStyle(color: Colors.grey),),
                ),
                Padding(
                  padding: const EdgeInsets.only(right: 15.0),
-                 child: const Text("20 March 2023",style: TextStyle(color: Colors.grey),),
+                 child:  Text(articles.publishedAt!,style: const TextStyle(color: Colors.grey),),
                ),
              ],
            ),
            Padding(
              padding: const EdgeInsets.only(left:15.0,top: 10),
-             child: Text("Silver Linings To Covid in march 2020 lorem ipsum Silver Linings To Covid in march 2020 lorem ipsumSilver Linings To Covid in march 2020 lorem ipsumSilver Linings To Covid in march 2020 lorem ipsumSilver Linings To Covid in march 2020 lorem ipsumSilver Linings To Covid in march 2020 lorem ipsumSilver Linings To Covid in march 2020 lorem ipsum ",
+             child: Text(articles.description!,
                style: TextStyle(color: Colors.black,
                    fontSize: 14,fontWeight: FontWeight.normal),),
            ),
@@ -89,7 +92,7 @@ class DetailPageState extends State<DetailPage>{
             //   height: size.height/2.5,
                width:size.width,
                child: ListView.builder(
-                 itemCount: 6,
+                 itemCount: StaticValues.listofarticles!.length,
                  shrinkWrap: true,
                  primary: true,
                  physics: const NeverScrollableScrollPhysics(),
@@ -98,9 +101,9 @@ class DetailPageState extends State<DetailPage>{
                    return GestureDetector(
                      onTap: (){
                        //navigate to new page
-                       navigatetodetail(context,"https://a.cdn-hotels.com/gdcs/production181/d1415/58842a68-207a-4fb1-a85c-102eba660798.jpg?impolicy=fcrop&w=800&h=533&q=medium");
+                       navigatetodetail(context,StaticValues.listofarticles![index]);
                      },
-                     child: CardModules.Listtile(size),
+                     child: CardModules.Listtile(size,StaticValues.listofarticles![index]),
                    );
                  },
                )

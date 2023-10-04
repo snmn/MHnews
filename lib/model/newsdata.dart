@@ -1,3 +1,5 @@
+import 'package:newsproject/static.dart';
+
 class NewsData {
   String? status;
   int? totalResults;
@@ -32,7 +34,7 @@ class Articles {
   String? author;
   String? title;
   String? description;
-  String? url;
+  String? url ;
   String? urlToImage;
   String? publishedAt;
   String? content;

@@ -2,6 +2,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:newsproject/model/newsdata.dart';
 import 'package:newsproject/static.dart';
 
 class CardModules {
@@ -78,7 +79,7 @@ class CardModules {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: Image.network(imgurl
+            child: Image.network(imgurl ?? StaticValues.defaultimg
                 ,fit: BoxFit.cover),
           ),
 
@@ -91,19 +92,19 @@ class CardModules {
     );
   }
 
-  static Widget Listtile(var size){
+  static Widget Listtile(var size, Articles articles){
     return Container(
       height: size.height/7,
       width: size.width,
       margin: const EdgeInsets.all(8),
       child: Row(
         children: [
-          CardModules.VideoCard("https://a.cdn-hotels.com/gdcs/production181/d1415/58842a68-207a-4fb1-a85c-102eba660798.jpg?impolicy=fcrop&w=800&h=533&q=medium"),
+          CardModules.VideoCard(articles.urlToImage==null?StaticValues.defaultimg:articles.urlToImage!),
 
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              CardModules.CardTitle(size, "Today is friday and tomorrow is saturday..."),
+              CardModules.CardTitle(size, articles.title!),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,10 +117,10 @@ class CardModules {
                       color: Colors.red,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Center(child: Text("Kantipur.com",style: StaticValues.urlbutton,maxLines: 1,overflow: TextOverflow.ellipsis)),
+                    child: Center(child: Text(articles.source==null?"snmn.com":articles.source!.name!,style: StaticValues.urlbutton,maxLines: 1,overflow: TextOverflow.ellipsis)),
                   ),
 
-                  const Text("22nd Sept 2023",style: TextStyle(color: Colors.grey,fontSize: 10),)
+                  Text(articles.publishedAt!,style: const TextStyle(color: Colors.grey,fontSize: 10),)
                 ],
               )
             ],

@@ -17,8 +17,8 @@ class Dashboard extends StatefulWidget{
 }
 class DashboardState extends State<Dashboard>{
 
- navigatetodetail(BuildContext context,String imgurl){
-   return Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailPage(imgurl)));
+ navigatetodetail(BuildContext context,Articles articles){
+   return Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailPage(articles)));
  }
     late Future<NewsData?> _futurenewsdata ;
 
@@ -54,7 +54,6 @@ class DashboardState extends State<Dashboard>{
                   return Column(
                     children: [
 
-
                       const SizedBox(height: 60,),
                       Container(
                         height: size.height/5,
@@ -67,12 +66,12 @@ class DashboardState extends State<Dashboard>{
                             return GestureDetector(
                               onTap: (){
                                 //navigate to new page
-                                navigatetodetail(context,"https://a.cdn-hotels.com/gdcs/production181/d1415/58842a68-207a-4fb1-a85c-102eba660798.jpg?impolicy=fcrop&w=800&h=533&q=medium");
+                                navigatetodetail(context,newsdata.articles![index]);
                               },
                               child: CardModules.Cards(size,
                                   newsdata.articles![index].title!,
                                   newsdata.articles![index].publishedAt,
-                                  newsdata.articles![index].urlToImage),
+                                  newsdata.articles![index].urlToImage==null?StaticValues.defaultimg:newsdata.articles![index].urlToImage!),
                             );
                           },
                         ),
@@ -81,16 +80,16 @@ class DashboardState extends State<Dashboard>{
                           height: size.height/1.5,
                           width:size.width,
                           child: ListView.builder(
-                            itemCount: 6,
+                            itemCount: newsdata.articles!.length,
                             physics: const AlwaysScrollableScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             itemBuilder: (context,index){
                               return GestureDetector(
                                 onTap: (){
                                   //navigate to new page
-                                  navigatetodetail(context,"https://a.cdn-hotels.com/gdcs/production181/d1415/58842a68-207a-4fb1-a85c-102eba660798.jpg?impolicy=fcrop&w=800&h=533&q=medium");
+                                  navigatetodetail(context,newsdata.articles![index]);
                                 },
-                                child: CardModules.Listtile(size),
+                                child: CardModules.Listtile(size,newsdata.articles![index]),
                               );
                             },
                           )
@@ -103,6 +102,7 @@ class DashboardState extends State<Dashboard>{
                       child: Center(child: Text("No Data")),
                     ),
                   );
+
                 }
 
               default:

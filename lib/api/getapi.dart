@@ -4,6 +4,7 @@ import 'dart:convert' as convert;
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:newsproject/model/newsdata.dart';
+import 'package:newsproject/static.dart';
 
 class GetApi{
 
@@ -27,6 +28,7 @@ class GetApi{
 
           var jsonResponse = convert.jsonDecode(response.body);
           var data = NewsData.fromJson(jsonResponse);
+          StaticValues.listofarticles = data.articles!;
 
         return data;
       }catch(e){
