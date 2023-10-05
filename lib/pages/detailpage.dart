@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:newsproject/modules/cards.dart';
-
 import '../model/newsdata.dart';
 import '../static.dart';
 
@@ -21,6 +21,14 @@ class DetailPageState extends State<DetailPage>{
 
   navigatetodetail(BuildContext context,Articles articles){
     return Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailPage(articles)));
+  }
+
+  String formatDateTimestring(String date) {
+    DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+    DateTime format = (dateFormat.parse(date));
+    DateFormat longdate = DateFormat("MMM dd, yyyy");
+    date = longdate.format(format);
+    return date;
   }
   @override
   Widget build(BuildContext context) {
@@ -72,7 +80,7 @@ class DetailPageState extends State<DetailPage>{
                ),
                Padding(
                  padding: const EdgeInsets.only(right: 15.0),
-                 child:  Text(articles.publishedAt!,style: const TextStyle(color: Colors.grey),),
+                 child:  Text(formatDateTimestring(articles.publishedAt!.replaceAll("T", " ")),style: const TextStyle(color: Colors.grey),),
                ),
              ],
            ),
