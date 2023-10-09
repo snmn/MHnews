@@ -30,6 +30,7 @@ class DetailPageState extends State<DetailPage>{
     date = longdate.format(format);
     return date;
   }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;

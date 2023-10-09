@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:newsproject/api/getapi.dart';
 import 'package:newsproject/pages/detailpage.dart';
 import 'package:newsproject/static.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/newsdata.dart';
 import '../modules/cards.dart';
+import 'loginpage.dart';
 
 class Dashboard extends StatefulWidget{
   @override
@@ -27,6 +29,16 @@ class DashboardState extends State<Dashboard>{
     getfuturedata();
     // TODO: implement initState
     super.initState();
+  }
+
+  logout(context) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+  // shared pref data clear
+  // open  login page
+    Navigator.pushAndRemoveUntil(context,
+      MaterialPageRoute(builder: (context)=> loginpage()),
+          (route) => false,);
   }
 
   getfuturedata() {
@@ -54,8 +66,23 @@ class DashboardState extends State<Dashboard>{
                   return Column(
                     children: [
 
-                      const SizedBox(height: 60,),
-                      Container(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          const SizedBox(height: 100,),
+                          GestureDetector(
+                            onTap: (){
+                              logout(context);
+                            },
+                            child: const Padding(
+                              padding:  EdgeInsets.all(10.0),
+                              child: Icon(Icons.logout,size: 25,color: Colors.black54,),
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
                         height: size.height/5,
                         width: size.width/1.02,
                         child: ListView.builder(
